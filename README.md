@@ -1,4 +1,4 @@
-# Sentiment Analysis API with FastAPI and DistilBERT
+# Sentiment Analysis with FastAPI and DistilBERT
 
 This project implements a FastAPI-based API for sentiment analysis of text data. It leverages a fine-tuned DistilBERT model to classify the sentiment of input text as positive, negative, or neutral. The API is containerized with Docker for easy deployment and usage.
 
