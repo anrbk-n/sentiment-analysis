@@ -16,7 +16,7 @@ try:
     model.to(device)
     model.eval() 
 except Exception as e:
-    print(f"Ошибка при загрузке модели: {e}")
+    print(f"Error loading the model: {e}")
 
 app = FastAPI()
 
