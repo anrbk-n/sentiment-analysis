@@ -16,8 +16,8 @@ This project implements a FastAPI-based API for sentiment analysis of text data.
 1.  **Clone the repository:**
 
     ```bash
-    git clone <your_repository_url>
-    cd <your_repository_name>
+    git clone https://github.com/anrbk-n/sentiment-analysis.git
+    cd sentiment-analysis
     ```
 
 2.  **Install Python dependencies:**
