@@ -48,7 +48,7 @@ docker build -t sentiment-analysis .
 `````
 ### Running the Docker container
 ```bash
-docker run -p 8000:8000 sentiment-analysis-api
+docker run -p 8000:8000 sentiment-analysis
 `````
 
 ### The API will be available at http://localhost:8000.
