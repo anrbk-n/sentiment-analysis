@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Analysis</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Sentiment Analysis</h1>
+        <form id="prediction-form">
+            <label for="text-input">Enter your text:</label>
+            <textarea id="text-input" name="text" rows="6" cols="50" required></textarea><br><br>
+            <button type="submit" class="analyze-button">Analyze</button>
+        </form>
+        <div id="prediction-result" class="result" style="display: none;">
+            <h2>Prediction Result</h2>
+            <p><strong>Predicted Sentiment:</strong> <span id="sentiment-label"></span></p>
+            <p><strong>Confidence:</strong> <span id="sentiment-confidence"></span>%</p>
+        </div>
+        <div id="error-message" style="display: none; color: #ff6b6b;"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('prediction-form');
+        const textInput = document.getElementById('text-input');
+        const resultDiv = document.getElementById('prediction-result');
+        const labelSpan = document.getElementById('sentiment-label');
+        const confidenceSpan = document.getElementById('sentiment-confidence');
+        const errorDiv = document.getElementById('error-message');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const text = textInput.value.trim();
+
+            if (!text) {
+                errorDiv.textContent = "Please enter some text.";
+                errorDiv.style.display = 'block';
+                resultDiv.style.display = 'none';
+                return;
+            }
+
+            errorDiv.style.display = 'none';
+            try {
+                const response = await fetch('/predict/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    labelSpan.textContent = data.label;
+                    confidenceSpan.textContent = (data.confidence * 100).toFixed(2); // Confidence in percentage
+                    resultDiv.style.display = 'block';
+                } else {
+                    const errorData = await response.json();
+                    errorDiv.textContent = `Error: ${errorData.detail || 'Failed to analyze text.'}`;
+                    errorDiv.style.display = 'block';
+                    resultDiv.style.display = 'none';
+                }
+            } catch (e) {
+                errorDiv.textContent = `Network error: ${e.message}`;
+                errorDiv.style.display = 'block';
+                resultDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
